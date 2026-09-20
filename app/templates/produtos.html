@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block titulo %}Produtos — AWS Database Lab Store{% endblock %}
+
+{% block conteudo %}
+<section class="secao-cabecalho">
+  <h1>Produtos</h1>
+  <p class="subtitulo">Listar, cadastrar e editar produtos.</p>
+</section>
+
+<div class="colunas">
+  <section class="painel">
+    <h2>{{ produto_edicao and 'Editar produto' or 'Cadastrar produto' }}</h2>
+    <form action="{{ url_for('salvar_produto') }}" method="post" class="formulario">
+      {% if produto_edicao %}
+      <input type="hidden" name="id" value="{{ produto_edicao.id }}">
+      {% endif %}
+      <label>Nome
+        <input type="text" name="nome" required value="{{ produto_edicao.nome if produto_edicao else '' }}">
+      </label>
+      <label>Descrição
+        <textarea name="descricao" rows="2">{{ produto_edicao.descricao if produto_edicao else '' }}</textarea>
+      </label>
+      <label>Preço (R$)
+        <input type="number" step="0.01" min="0" name="preco" value="{{ '%.2f'|format(produto_edicao.preco) if produto_edicao else '0.00' }}">
+      </label>
+      <label>Estoque
+        <input type="number" min="0" name="estoque" value="{{ produto_edicao.estoque if produto_edicao else 0 }}">
+      </label>
+      <label>Imagem (nome do arquivo ou chave S3)
+        <input type="text" name="imagem" placeholder="ex.: notebook.png" value="{{ produto_edicao.imagem if produto_edicao else '' }}">
+      </label>
+      <div class="acoes">
+        <button type="submit" class="botao botao-primario">Salvar</button>
+        {% if produto_edicao %}
+        <a class="botao botao-secundario" href="{{ url_for('produtos') }}">Cancelar</a>
+        {% endif %}
+      </div>
+    </form>
+  </section>
+
+  <section class="painel painel-largo">
+    <h2>Lista de produtos</h2>
+    {% if produtos %}
+    <table class="tabela">
+      <thead>
+        <tr><th>Imagem</th><th>Nome</th><th>Descrição</th><th>Preço</th><th>Estoque</th><th>Ações</th></tr>
+      </thead>
+      <tbody>
+        {% for p in produtos %}
+        <tr>
+          <td><img class="miniatura" src="{{ imagem_url(p.imagem) }}" alt="Imagem de {{ p.nome }}"></td>
+          <td>{{ p.nome }}</td>
+          <td>{{ p.descricao }}</td>
+          <td>R$ {{ '%.2f'|format(p.preco) }}</td>
+          <td>{{ p.estoque }}</td>
+          <td><a class="botao botao-pequeno" href="{{ url_for('produtos', editar=p.id) }}">Editar</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="vazio">Nenhum produto cadastrado.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

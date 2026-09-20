@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block titulo %}Clientes — AWS Database Lab Store{% endblock %}
+
+{% block conteudo %}
+<section class="secao-cabecalho">
+  <h1>Clientes</h1>
+  <p class="subtitulo">Cadastrar e listar clientes.</p>
+</section>
+
+<div class="colunas">
+  <section class="painel">
+    <h2>Cadastrar cliente</h2>
+    <form action="{{ url_for('salvar_cliente') }}" method="post" class="formulario">
+      <label>Nome
+        <input type="text" name="nome" required>
+      </label>
+      <label>E-mail
+        <input type="email" name="email" required>
+      </label>
+      <label>Telefone
+        <input type="text" name="telefone" placeholder="(00) 00000-0000">
+      </label>
+      <div class="acoes">
+        <button type="submit" class="botao botao-primario">Salvar</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="painel painel-largo">
+    <h2>Lista de clientes</h2>
+    {% if clientes %}
+    <table class="tabela">
+      <thead>
+        <tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Criado em</th></tr>
+      </thead>
+      <tbody>
+        {% for c in clientes %}
+        <tr>
+          <td>{{ c.id }}</td>
+          <td>{{ c.nome }}</td>
+          <td>{{ c.email }}</td>
+          <td>{{ c.telefone }}</td>
+          <td>{{ c.criado_em }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="vazio">Nenhum cliente cadastrado.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

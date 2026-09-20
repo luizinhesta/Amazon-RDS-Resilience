@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="160" viewBox="0 0 200 160" role="img" aria-label="Notebook">
+  <rect width="200" height="160" fill="#eef4fb"/>
+  <rect x="0.5" y="0.5" width="199" height="159" fill="none" stroke="#d9dee3"/>
+  <g fill="none" stroke="#3b6ea5" stroke-width="3" stroke-linejoin="round">
+    <rect x="58" y="45" width="84" height="52" rx="4" fill="#ffffff"/>
+    <path d="M48 105 H152 L160 118 H40 Z" fill="#cfe0f2"/>
+  </g>
+  <rect x="66" y="53" width="68" height="36" fill="#8fb4dd"/>
+  <text x="100" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#3b6ea5">Notebook</text>
+</svg>

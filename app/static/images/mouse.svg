@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="160" viewBox="0 0 200 160" role="img" aria-label="Mouse">
+  <rect width="200" height="160" fill="#eef7f0"/>
+  <rect x="0.5" y="0.5" width="199" height="159" fill="none" stroke="#d9dee3"/>
+  <g fill="#ffffff" stroke="#2e8b57" stroke-width="3" stroke-linejoin="round">
+    <rect x="78" y="38" width="44" height="74" rx="22"/>
+  </g>
+  <line x1="100" y1="40" x2="100" y2="70" stroke="#2e8b57" stroke-width="3"/>
+  <text x="100" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#2e8b57">Mouse</text>
+</svg>

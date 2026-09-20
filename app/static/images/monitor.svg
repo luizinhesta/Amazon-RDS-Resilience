@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="160" viewBox="0 0 200 160" role="img" aria-label="Monitor">
+  <rect width="200" height="160" fill="#eef2f7"/>
+  <rect x="0.5" y="0.5" width="199" height="159" fill="none" stroke="#d9dee3"/>
+  <rect x="46" y="38" width="108" height="66" rx="5" fill="#ffffff" stroke="#37474f" stroke-width="3"/>
+  <rect x="54" y="46" width="92" height="50" fill="#90a4ae"/>
+  <rect x="88" y="104" width="24" height="12" fill="#607d8b"/>
+  <rect x="74" y="116" width="52" height="6" rx="3" fill="#37474f"/>
+  <text x="100" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#37474f">Monitor</text>
+</svg>

@@ -1,0 +1,174 @@
+/* ==========================================================================
+   AWS Database Lab Store — estilo base (CSS vanilla, sem build step).
+   Foco em clareza e legibilidade; o objetivo do site é demonstrar a
+   arquitetura de banco de dados, não ser um projeto de front-end complexo.
+   ========================================================================== */
+
+:root {
+  --cor-primaria: #ff9900;      /* laranja AWS */
+  --cor-escura: #232f3e;        /* azul-marinho AWS */
+  --cor-fundo: #f4f6f8;
+  --cor-borda: #d9dee3;
+  --cor-texto: #1b1f24;
+  --cor-ok: #1a7f37;
+  --cor-erro: #b42318;
+  --raio: 8px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+  line-height: 1.5;
+}
+
+/* ----- Cabeçalho / navegação ----- */
+.topo { background: var(--cor-escura); color: #fff; }
+.topo-conteudo {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.marca { color: #fff; text-decoration: none; font-size: 1.15rem; font-weight: 700; }
+.marca-icone { margin-right: 0.35rem; }
+.menu { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+.menu a {
+  color: #e6e9ee;
+  text-decoration: none;
+  padding: 0.4rem 0.7rem;
+  border-radius: var(--raio);
+}
+.menu a:hover { background: rgba(255, 255, 255, 0.12); }
+.menu .menu-lab { background: var(--cor-primaria); color: var(--cor-escura); font-weight: 600; }
+.faixa-lab {
+  background: #111a26;
+  color: #cbd3dc;
+  font-size: 0.85rem;
+  padding: 0.35rem 1rem;
+  text-align: center;
+}
+.faixa-lab .separador { margin: 0 0.5rem; color: var(--cor-primaria); }
+
+/* ----- Conteúdo ----- */
+.conteudo { max-width: 1080px; margin: 1.5rem auto; padding: 0 1rem; }
+.secao-cabecalho { margin-bottom: 1.25rem; }
+.secao-cabecalho h1 { margin: 0 0 0.25rem; }
+.subtitulo { margin: 0; color: #5a6572; }
+
+/* ----- Avisos (flash) ----- */
+.avisos { margin-bottom: 1rem; }
+.aviso { padding: 0.6rem 0.9rem; border-radius: var(--raio); margin-bottom: 0.5rem; }
+.aviso-sucesso { background: #e6f4ea; color: var(--cor-ok); border: 1px solid #b7dfc2; }
+.aviso-erro { background: #fdeceb; color: var(--cor-erro); border: 1px solid #f3c2bd; }
+
+/* ----- Grade de produtos ----- */
+.grade-produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.card-produto {
+  background: #fff;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.card-imagem { width: 100%; height: 160px; object-fit: contain; background: #fafbfc; padding: 0.5rem; }
+.card-corpo { padding: 0.8rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.card-titulo { margin: 0; font-size: 1.05rem; }
+.card-descricao { margin: 0; color: #5a6572; font-size: 0.9rem; }
+.card-preco { margin: 0; font-weight: 700; color: var(--cor-escura); }
+.card-estoque { margin: 0; font-size: 0.85rem; color: #5a6572; }
+.card-form { margin-top: auto; display: flex; gap: 0.4rem; }
+.card-form input { width: 4rem; }
+
+/* ----- Colunas / painéis ----- */
+.colunas { display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; align-items: start; }
+.painel {
+  background: #fff;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.painel h2 { margin-top: 0; }
+.painel-largo { grid-column: 1 / -1; }
+
+/* ----- Formulários ----- */
+.formulario { display: flex; flex-direction: column; gap: 0.7rem; }
+.formulario label { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.9rem; font-weight: 600; }
+.formulario input, .formulario select, .formulario textarea {
+  padding: 0.5rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  font: inherit;
+}
+.acoes { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.25rem; }
+.inline { display: inline; }
+
+/* ----- Botões ----- */
+.botao {
+  display: inline-block;
+  padding: 0.5rem 0.9rem;
+  border: none;
+  border-radius: var(--raio);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+.botao-primario { background: var(--cor-primaria); color: var(--cor-escura); font-weight: 600; }
+.botao-primario:hover { filter: brightness(0.95); }
+.botao-secundario { background: #eef1f4; color: var(--cor-texto); }
+.botao-pequeno { padding: 0.3rem 0.6rem; font-size: 0.85rem; background: #eef1f4; color: var(--cor-texto); }
+.botao-perigo-leve { background: #fdeceb; color: var(--cor-erro); }
+
+/* ----- Tabelas ----- */
+.tabela { width: 100%; border-collapse: collapse; }
+.tabela th, .tabela td { text-align: left; padding: 0.55rem 0.6rem; border-bottom: 1px solid var(--cor-borda); vertical-align: middle; }
+.tabela th { background: #f7f9fb; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.02em; color: #5a6572; }
+.miniatura { width: 44px; height: 44px; object-fit: contain; background: #fafbfc; border-radius: 4px; }
+.total-rotulo { text-align: right; font-weight: 600; }
+.total-valor { font-weight: 700; }
+
+/* ----- Painel do laboratório ----- */
+.grade-lab {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.card-lab {
+  background: #fff;
+  border: 1px solid var(--cor-borda);
+  border-left: 4px solid var(--cor-primaria);
+  border-radius: var(--raio);
+  padding: 0.9rem 1rem;
+}
+.card-lab h3 { margin: 0 0 0.35rem; font-size: 0.85rem; text-transform: uppercase; color: #5a6572; }
+.card-lab p { margin: 0; }
+.card-lab-largo { grid-column: 1 / -1; }
+.badge { padding: 0.15rem 0.55rem; border-radius: 999px; font-size: 0.8rem; font-weight: 700; }
+.badge-ok { background: #e6f4ea; color: var(--cor-ok); }
+.badge-erro { background: #fdeceb; color: var(--cor-erro); }
+.nota { color: #5a6572; font-size: 0.9rem; }
+.nota-seguranca { border-top: 1px dashed var(--cor-borda); padding-top: 0.6rem; }
+
+/* ----- Rodapé ----- */
+.rodape { max-width: 1080px; margin: 2rem auto; padding: 1rem; color: #7a8592; font-size: 0.85rem; text-align: center; }
+.vazio { color: #5a6572; }
+
+/* ----- Responsivo ----- */
+@media (max-width: 720px) {
+  .colunas { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block titulo %}Início — AWS Database Lab Store{% endblock %}
+
+{% block conteudo %}
+<section class="secao-cabecalho">
+  <h1>Produtos em destaque</h1>
+  <p class="subtitulo">Loja de demonstração para estudar a evolução da arquitetura de banco de dados na AWS.</p>
+</section>
+
+{% if produtos %}
+<div class="grade-produtos">
+  {% for p in produtos %}
+  <article class="card-produto">
+    <img class="card-imagem" src="{{ imagem_url(p.imagem) }}" alt="Imagem do produto {{ p.nome }}">
+    <div class="card-corpo">
+      <h2 class="card-titulo">{{ p.nome }}</h2>
+      <p class="card-descricao">{{ p.descricao }}</p>
+      <p class="card-preco">R$ {{ '%.2f'|format(p.preco) }}</p>
+      <p class="card-estoque">Estoque: {{ p.estoque }}</p>
+      <form action="{{ url_for('carrinho_adicionar') }}" method="post" class="card-form">
+        <input type="hidden" name="produto_id" value="{{ p.id }}">
+        <input type="number" name="quantidade" value="1" min="1" aria-label="Quantidade">
+        <button type="submit" class="botao botao-primario">Adicionar ao carrinho</button>
+      </form>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<p class="vazio">Nenhum produto cadastrado ainda. Vá em <a href="{{ url_for('produtos') }}">Produtos</a> para cadastrar.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block titulo %}Database Lab — Painel{% endblock %}
+
+{% block conteudo %}
+<section class="secao-cabecalho">
+  <h1>Painel do Laboratório</h1>
+  <p class="subtitulo">Informações da fase atual e status de conectividade do banco.</p>
+</section>
+
+<div class="grade-lab">
+  <div class="card-lab">
+    <h3>Projeto atual</h3>
+    <p>{{ projeto }}</p>
+  </div>
+  <div class="card-lab">
+    <h3>Versão da arquitetura</h3>
+    <p>{{ versao_arquitetura }}</p>
+  </div>
+  <div class="card-lab">
+    <h3>Banco utilizado</h3>
+    <p>{{ banco }}</p>
+  </div>
+  <div class="card-lab">
+    <h3>Recursos utilizados</h3>
+    <p>{{ recursos }}</p>
+  </div>
+  <div class="card-lab card-lab-largo">
+    <h3>Objetivo da fase</h3>
+    <p>{{ objetivo }}</p>
+  </div>
+</div>
+
+<section class="painel painel-largo">
+  <h2>Status de conectividade</h2>
+  <table class="tabela">
+    <thead>
+      <tr><th>Papel</th><th>Endpoint</th><th>Status</th><th>Detalhe</th></tr>
+    </thead>
+    <tbody>
+      {% for c in conectividade %}
+      <tr>
+        <td>{{ c.papel }}</td>
+        <td>{{ c.endpoint }}</td>
+        <td>
+          {% if c.status == 'OK' %}
+          <span class="badge badge-ok">OK</span>
+          {% else %}
+          <span class="badge badge-erro">ERRO</span>
+          {% endif %}
+        </td>
+        <td>{{ c.erro or 'SELECT 1 executado com sucesso' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p class="nota">
+    Armazenamento de imagens: <strong>{{ storage.modo }}</strong> ({{ storage.detalhe }}).
+    Carrinho: <strong>{{ cart_mode }}</strong>.
+  </p>
+  <p class="nota nota-seguranca">
+    Este painel é somente informativo. Ações administrativas (failover, backup,
+    restore) são executadas manualmente pelo Console AWS, nunca por esta aplicação.
+  </p>
+</section>
+{% endblock %}

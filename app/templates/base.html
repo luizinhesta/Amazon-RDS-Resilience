@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block titulo %}AWS Database Lab Store{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="topo">
+    <div class="topo-conteudo">
+      <a class="marca" href="{{ url_for('index') }}">
+        <span class="marca-icone">🗄️</span>
+        AWS Database Lab Store
+      </a>
+      <nav class="menu" aria-label="Navegação principal">
+        <a href="{{ url_for('index') }}">Início</a>
+        <a href="{{ url_for('produtos') }}">Produtos</a>
+        <a href="{{ url_for('clientes') }}">Clientes</a>
+        <a href="{{ url_for('pedidos') }}">Pedidos</a>
+        <a href="{{ url_for('carrinho') }}">Carrinho</a>
+        <a class="menu-lab" href="{{ url_for('database_lab') }}">Database Lab</a>
+      </nav>
+    </div>
+    <div class="faixa-lab">
+      <span>{{ lab_project }}</span>
+      <span class="separador">•</span>
+      <span>{{ lab_arch_version }}</span>
+    </div>
+  </header>
+
+  <main class="conteudo">
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+      {% if mensagens %}
+        <div class="avisos">
+          {% for categoria, texto in mensagens %}
+            <div class="aviso aviso-{{ categoria }}">{{ texto }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block conteudo %}{% endblock %}
+  </main>
+
+  <footer class="rodape">
+    <p>Laboratório didático de arquitetura de bancos de dados na AWS. Nenhuma ação administrativa
+       perigosa (failover, backup, restore) é executada pela aplicação.</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

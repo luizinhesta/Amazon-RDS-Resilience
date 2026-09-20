@@ -1,0 +1,56 @@
+# =============================================================================
+# aws-database-lab.service — Unit systemd da AWS Database Lab Store
+#
+# Objetivo: manter a aplicação Flask (via gunicorn) rodando como serviço do
+# sistema na EC2, iniciando automaticamente no boot e reiniciando em caso de
+# falha (sobrevive a reinícios da instância — Requisito 2.7).
+#
+# Instalação (ver IMPLANTACAO.md, Passo 0.5):
+#   sudo cp /opt/aws-database-lab/scripts/aws-database-lab.service \
+#           /etc/systemd/system/aws-database-lab.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now aws-database-lab
+#
+# Ajuste os caminhos abaixo se você instalar a aplicação em outro diretório.
+# =============================================================================
+
+[Unit]
+Description=AWS Database Lab Store (Flask + gunicorn)
+# Garante que a rede esteja disponível antes de subir a aplicação.
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+
+# Usuário/grupo sem privilégios que executa a aplicação (menor privilégio,
+# Requisito 11). O usuário 'ec2-user' já existe no Amazon Linux.
+User=ec2-user
+Group=ec2-user
+
+# Diretório de trabalho = raiz da aplicação (onde estão app.py e o .env).
+WorkingDirectory=/opt/aws-database-lab
+
+# Carrega as variáveis de ambiente do arquivo .env (nunca versionado).
+# O prefixo '-' faz o systemd não falhar caso o arquivo ainda não exista.
+EnvironmentFile=-/opt/aws-database-lab/.env
+
+# Sobe a aplicação com o gunicorn a partir do virtualenv (.venv).
+#   - 3 workers: suficiente para o laboratório (ajuste conforme a instância).
+#   - bind 0.0.0.0:5000: escuta em todas as interfaces, na porta 5000.
+#     O acesso externo é controlado pelo Security Group sg-ec2-lab, que
+#     libera a porta apenas para o IP do estudante (Requisito 11).
+#   - 'app:app': módulo app.py, objeto Flask chamado 'app'.
+ExecStart=/opt/aws-database-lab/.venv/bin/gunicorn --workers 3 --bind 0.0.0.0:5000 --access-logfile - --error-logfile - app:app
+
+# Reinicia o serviço automaticamente se ele cair.
+Restart=on-failure
+RestartSec=5
+
+# Envia logs (stdout/stderr) para o journald (consultável com journalctl).
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=aws-database-lab
+
+[Install]
+WantedBy=multi-user.target

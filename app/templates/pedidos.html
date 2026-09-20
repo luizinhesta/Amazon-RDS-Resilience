@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block titulo %}Pedidos — AWS Database Lab Store{% endblock %}
+
+{% block conteudo %}
+<section class="secao-cabecalho">
+  <h1>Pedidos</h1>
+  <p class="subtitulo">Criar pedido e consultar pedidos.</p>
+</section>
+
+<div class="colunas">
+  <section class="painel">
+    <h2>Criar pedido</h2>
+    <form action="{{ url_for('criar_pedido') }}" method="post" class="formulario">
+      <label>Cliente
+        <select name="cliente_id" required>
+          <option value="">Selecione…</option>
+          {% for c in clientes %}
+          <option value="{{ c.id }}">{{ c.nome }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Produto
+        <select name="produto_id" required>
+          <option value="">Selecione…</option>
+          {% for p in produtos %}
+          <option value="{{ p.id }}">{{ p.nome }} — R$ {{ '%.2f'|format(p.preco) }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Quantidade
+        <input type="number" name="quantidade" value="1" min="1">
+      </label>
+      <div class="acoes">
+        <button type="submit" class="botao botao-primario">Criar pedido</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="painel painel-largo">
+    <h2>Pedidos</h2>
+    {% if pedidos %}
+    <table class="tabela">
+      <thead>
+        <tr><th>#</th><th>Cliente</th><th>Status</th><th>Total</th><th>Criado em</th><th>Ações</th></tr>
+      </thead>
+      <tbody>
+        {% for pd in pedidos %}
+        <tr>
+          <td>{{ pd.id }}</td>
+          <td>{{ pd.cliente_nome }}</td>
+          <td>{{ pd.status }}</td>
+          <td>R$ {{ '%.2f'|format(pd.total) }}</td>
+          <td>{{ pd.criado_em }}</td>
+          <td><a class="botao botao-pequeno" href="{{ url_for('pedidos', detalhe=pd.id) }}">Ver itens</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="vazio">Nenhum pedido cadastrado.</p>
+    {% endif %}
+  </section>
+</div>
+
+{% if pedido_detalhe %}
+<section class="painel painel-largo">
+  <h2>Itens do pedido #{{ pedido_detalhe.id }} — {{ pedido_detalhe.cliente_nome }}</h2>
+  <table class="tabela">
+    <thead>
+      <tr><th>Produto</th><th>Quantidade</th><th>Preço unitário</th><th>Subtotal</th></tr>
+    </thead>
+    <tbody>
+      {% for it in itens %}
+      <tr>
+        <td>{{ it.nome_produto }}</td>
+        <td>{{ it.quantidade }}</td>
+        <td>R$ {{ '%.2f'|format(it.preco_unitario) }}</td>
+        <td>R$ {{ '%.2f'|format(it.preco_unitario * it.quantidade) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
+{% endblock %}
